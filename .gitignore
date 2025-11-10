@@ -1,7 +1,4 @@
-# dependencies
 node_modules/
-
-# env files
 .env
 
 # logs
@@ -13,3 +10,5 @@ yarn-error.log*
 
 # editor settings
 .vscode/
+node_modules/
+.env
