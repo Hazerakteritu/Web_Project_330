@@ -1,0 +1,24 @@
+const express = require("express");
+const { registerUser, loginUser } = require("../controllers/authController");
+const { protect } = require("../middleware/authMiddleware");
+const { authorizeRoles } = require("../middleware/roleMiddleware");
+
+const router = express.Router();
+
+router.post("/register", registerUser);
+router.post("/login", loginUser);
+
+// Protected routes
+router.get("/profile", protect, (req, res) => {
+  res.json({ message: "Welcome to your profile", user: req.user });
+});
+
+router.get("/admin/dashboard", protect, authorizeRoles("admin"), (req, res) => {
+  res.json({ message: "Welcome Admin Dashboard" });
+});
+
+router.get("/worker/tasks", protect, authorizeRoles("worker"), (req, res) => {
+  res.json({ message: "Welcome Worker Task List" });
+});
+
+module.exports = router;
