@@ -29,3 +29,6 @@ CREATE TABLE requests (
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
   FOREIGN KEY (assigned_worker_id) REFERENCES users(id) ON DELETE SET NULL
 );
+
+
+ALTER TABLE requests ADD COLUMN rejection_reason VARCHAR(255);
