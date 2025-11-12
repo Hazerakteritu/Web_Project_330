@@ -22,11 +22,12 @@ const createRequest = (req, res) => {
 };
 
 
-//get req - user and admin
+//get req
 const getRequests = (req, res) => {
   const { role, id: user_id } = req.user;
+  const { status } = req.query; // query filter e.g. /api/requests?status=pending
 
-  let sql;
+  let sql = "";
   let params = [];
 
   if (role === "admin") {
@@ -34,15 +35,32 @@ const getRequests = (req, res) => {
       SELECT r.*, u.name AS user_name, u.email AS user_email
       FROM requests r
       JOIN users u ON r.user_id = u.id
+      ${status ? "WHERE r.status = ?" : ""}
       ORDER BY r.created_at DESC
     `;
+    if (status) params.push(status);
+
+  } else if (role === "worker") {
+    sql = `
+      SELECT r.*, u.name AS user_name, u.email AS user_email
+      FROM requests r
+      JOIN users u ON r.user_id = u.id
+      WHERE r.assigned_worker_id = ?
+      ${status ? "AND r.status = ?" : ""}
+      ORDER BY r.created_at DESC
+    `;
+    params.push(user_id);
+    if (status) params.push(status);
+
   } else {
     sql = `
       SELECT * FROM requests
       WHERE user_id = ?
+      ${status ? "AND status = ?" : ""}
       ORDER BY created_at DESC
     `;
-    params = [user_id];
+    params.push(user_id);
+    if (status) params.push(status);
   }
 
   db.query(sql, params, (err, results) => {

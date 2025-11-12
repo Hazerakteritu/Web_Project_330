@@ -31,5 +31,9 @@ CREATE TABLE requests (
 );
 
 
+ALTER TABLE requests ADD COLUMN rejection_reason VARCHAR(255);
+
+
+
 ALTER TABLE users
 ADD COLUMN location VARCHAR(255) NOT NULL;
