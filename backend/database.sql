@@ -37,3 +37,5 @@ ALTER TABLE requests ADD COLUMN rejection_reason VARCHAR(255);
 
 ALTER TABLE users
 ADD COLUMN location VARCHAR(255) NOT NULL;
+
+ALTER TABLE requests MODIFY status ENUM('pending', 'assigned', 'in_progress', 'completed', 'rejected', 'cancelled') DEFAULT 'pending';

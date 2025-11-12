@@ -93,4 +93,36 @@ const updateRequestStatus = (req, res) => {
   });
 };
 
-module.exports = { createRequest, getRequests, updateRequestStatus };
+// Cancel a pending request (Citizen)
+const cancelRequest = (req, res) => {
+  const { id } = req.params;
+  const user_id = req.user.id; // from JWT
+
+  // Only allow cancelling pending requests owned by this user
+  const checkSql = `
+    SELECT * FROM requests WHERE id = ? AND user_id = ? AND status = 'pending'
+  `;
+
+  db.query(checkSql, [id, user_id], (err, results) => {
+    if (err) return res.status(500).json({ message: "Database error", error: err });
+
+    if (results.length === 0) {
+      return res
+        .status(403)
+        .json({ message: "You can only cancel your own pending requests" });
+    }
+
+    const updateSql = `
+      UPDATE requests SET status = 'cancelled' WHERE id = ?
+    `;
+
+    db.query(updateSql, [id], (err2) => {
+      if (err2) return res.status(500).json({ message: "Database error", error: err2 });
+      res.json({ message: "Request cancelled successfully" });
+    });
+  });
+};
+
+module.exports = { createRequest, getRequests, updateRequestStatus, cancelRequest };
+
+
