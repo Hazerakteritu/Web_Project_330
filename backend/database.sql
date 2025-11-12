@@ -1,5 +1,5 @@
--- CREATE DATABASE waste_management;
--- USE waste_management;
+CREATE DATABASE waste_management;
+USE waste_management;
 
 -- Create Users Table
 CREATE TABLE users (
@@ -29,3 +29,7 @@ CREATE TABLE requests (
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
   FOREIGN KEY (assigned_worker_id) REFERENCES users(id) ON DELETE SET NULL
 );
+
+
+ALTER TABLE users
+ADD COLUMN location VARCHAR(255) NOT NULL;
