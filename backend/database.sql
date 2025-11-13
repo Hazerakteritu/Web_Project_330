@@ -39,3 +39,27 @@ ALTER TABLE users
 ADD COLUMN location VARCHAR(255) NOT NULL;
 
 ALTER TABLE requests MODIFY status ENUM('pending', 'assigned', 'in_progress', 'completed', 'rejected', 'cancelled') DEFAULT 'pending';
+
+
+
+
+-- Feedback table
+CREATE TABLE feedback (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  request_id INT NOT NULL,
+  feedback_text TEXT,
+  rating INT CHECK (rating BETWEEN 1 AND 5),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (request_id) REFERENCES requests(id) ON DELETE CASCADE
+);
+
+-- Notifications table
+CREATE TABLE notifications (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  feedback_id INT NOT NULL,
+  status ENUM('unread', 'read') DEFAULT 'unread',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (feedback_id) REFERENCES feedback(id) ON DELETE CASCADE
+);
