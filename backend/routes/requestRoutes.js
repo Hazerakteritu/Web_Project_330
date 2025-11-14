@@ -6,13 +6,21 @@ const {
   cancelRequest,
     workerAction,
 } = require("../controllers/requestController");
+
+
 const { protect } = require("../middleware/authMiddleware");
 const { authorizeRoles } = require("../middleware/roleMiddleware");
+const upload = require("../middleware/uploadMiddleware");
+
 
 const router = express.Router();
 
 // Citizen submits new request
-router.post("/", protect, authorizeRoles("citizen"), createRequest);
+router.post("/", 
+            protect, 
+            authorizeRoles("citizen"), 
+            upload.single("waste_image"),
+            createRequest);
 
 // View all requests
 router.get("/", protect, getRequests);

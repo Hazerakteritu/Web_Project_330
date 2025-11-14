@@ -19,6 +19,8 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/requests", requestRoutes);
 app.use("/api/feedback", feedbackRoutes);
+app.use("/uploads", express.static("uploads"));
+
 
 
 // Default route
