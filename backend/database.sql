@@ -63,3 +63,8 @@ CREATE TABLE notifications (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (feedback_id) REFERENCES feedback(id) ON DELETE CASCADE
 );
+
+
+//add image
+ALTER TABLE users ADD COLUMN profile_image VARCHAR(255);
+ALTER TABLE requests ADD COLUMN waste_image VARCHAR(255);

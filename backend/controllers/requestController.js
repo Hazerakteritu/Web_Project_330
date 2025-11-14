@@ -6,19 +6,30 @@ const createRequest = (req, res) => {
   const { request_type, description, location, priority } = req.body;
   const user_id = req.user.id; // from JWT token
 
+  const waste_image = req.file ? req.file.path : null;
+
   if (!request_type || !location) {
     return res.status(400).json({ message: "Request type and location required" });
   }
 
-  const sql = `
-    INSERT INTO requests (user_id, request_type, description, location, priority)
-    VALUES (?, ?, ?, ?, ?)
+   const sql = `
+    INSERT INTO requests (user_id, request_type, description, location, priority, waste_image)
+    VALUES (?, ?, ?, ?, ?, ?)
   `;
 
-  db.query(sql, [user_id, request_type, description, location, priority || "normal"], (err, result) => {
-    if (err) return res.status(500).json({ message: "Database error", error: err });
-    res.status(201).json({ message: "Request submitted successfully" });
-  });
+
+  db.query(
+    sql,
+    [user_id, request_type, description, location, priority || "normal", waste_image],
+    (err, result) => {
+      if (err) return res.status(500).json({ message: "Database error", error: err });
+
+      res.status(201).json({
+        message: "Request submitted successfully",
+        image: waste_image
+      });
+    }
+  );
 };
 
 
