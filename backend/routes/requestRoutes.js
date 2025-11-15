@@ -5,6 +5,7 @@ const {
   updateRequestStatus,
   cancelRequest,
     workerAction,
+  completeTask
 } = require("../controllers/requestController");
 
 
@@ -34,5 +35,7 @@ router.put("/:id/cancel", protect, authorizeRoles("citizen"), cancelRequest);
 // Worker accepts or rejects assigned task
 router.put("/:id/worker-action", protect, authorizeRoles("worker"), workerAction);
 
+
+router.put("/:id/complete", protect, authorizeRoles("worker"), completeTask);
 
 module.exports = router;
