@@ -162,7 +162,42 @@ const workerAction = (req, res) => {
     }
     res.json({ message: `Task ${action === "accept" ? "accepted" : "rejected"} successfully` });
   });
+
+  
+};
+
+// WORKER COMPLETES A TASK
+const completeTask = (req, res) => {
+  const { id } = req.params; // request id
+  const worker_id = req.user.id;
+
+  // Only allow completing tasks that are assigned to THIS worker AND currently in_progress
+  const checkSql = `
+    SELECT * FROM requests 
+    WHERE id = ? AND assigned_worker_id = ? AND status = 'in_progress'
+  `;
+
+  db.query(checkSql, [id, worker_id], (err, results) => {
+    if (err) return res.status(500).json({ message: "Database error", error: err });
+
+    if (results.length === 0) {
+      return res.status(403).json({
+        message: "You can only complete your own in-progress tasks"
+      });
+    }
+
+    const updateSql = `
+      UPDATE requests SET status = 'completed'
+      WHERE id = ?
+    `;
+
+    db.query(updateSql, [id], (err2) => {
+      if (err2) return res.status(500).json({ message: "Database error", error: err2 });
+
+      res.json({ message: "Task marked as completed" });
+    });
+  });
 };
 
 
-module.exports = { createRequest, getRequests, updateRequestStatus, cancelRequest, workerAction };
+module.exports = { createRequest, getRequests, updateRequestStatus, cancelRequest, workerAction, completeTask };

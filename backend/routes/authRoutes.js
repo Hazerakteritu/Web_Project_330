@@ -5,6 +5,8 @@ const { authorizeRoles } = require("../middleware/roleMiddleware");
 
 const uploadProfile = require("../middleware/profileUpload");
 const { updateProfilePic } = require("../controllers/authController");
+const { deleteMyAccount } = require("../controllers/authController");
+//const { completeTask } = require("../controllers/requestController");
 
 const router = express.Router();
 
@@ -13,6 +15,16 @@ router.post("/login", loginUser);
 
 // user profile pic update
 router.put("/profile/pic", protect, uploadProfile.single("image"), updateProfilePic);
+
+
+// Delete own account
+router.delete("/delete-account", protect, authorizeRoles("citizen", "worker", "admin"), deleteMyAccount);
+
+// Worker completes a task
+
+//router.put("/worker/complete/:id", protect, authorizeRoles("worker"), completeTask);
+
+
 
 // Test route to confirm router works
 router.get("/test", (req, res) => {
