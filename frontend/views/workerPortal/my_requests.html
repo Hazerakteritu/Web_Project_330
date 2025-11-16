@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Tasks - EcoClean</title>
+    <link rel="stylesheet" href="my_requests.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">EcoClean</div>
+            <ul class="nav-links">
+                <li><a href="worker_dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li class="active"><a href="#"><i class="fas fa-list-check"></i> My Tasks</a></li>
+                <li><a href="rewards_page.html"><i class="fas fa-star"></i> Points & Rewards</a></li>
+                <li><a href="#"><i class="fas fa-bell"></i> Notifications</a></li>
+                <li><a href="#"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <div class="page-title">
+                <i class="fas fa-list-check"></i> My Tasks
+            </div>
+
+            <div class="filter-bar">
+                <label for="status-filter">Filter by Status:</label>
+                <select id="status-filter">
+                    <option value="All">All</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Rejected">Rejected</option>
+                </select>
+            </div>
+
+            <div class="task-list">
+                
+                <div class="task-card">
+                    <div class="task-details">
+                        <p><i class="fas fa-map-marker-alt icon-red"></i> **Location:** sust</p>
+                        <p><i class="fas fa-spinner icon-red"></i> **Status:** <span class="status-tag in-progress">In Progress</span></p>
+                        <p><i class="fas fa-dumpster-fire icon-gray"></i> **Type:** waste</p>
+                        <p><i class="fas fa-clipboard-list icon-gray"></i> **Description:** hello</p>
+                        <p><i class="fas fa-exclamation-triangle icon-gray"></i> **Priority:** normal</p>
+                        <p><i class="fas fa-calendar-alt icon-gray"></i> **Date:** 2025-11-14</p>
+                    </div>
+                    <div class="task-image">
+                        <img src="https://via.placeholder.com/150x150?text=Waste+Image+1" alt="Waste image">
+                    </div>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-details">
+                        <p><i class="fas fa-map-marker-alt icon-red"></i> **Location:** gulshan 2</p>
+                        <p><i class="fas fa-spinner icon-red"></i> **Status:** <span class="status-tag completed">Completed</span></p>
+                        <p><i class="fas fa-dumpster-fire icon-gray"></i> **Type:** recycling</p>
+                        <p><i class="fas fa-clipboard-list icon-gray"></i> **Description:** plastic bottles and paper</p>
+                        <p><i class="fas fa-exclamation-triangle icon-gray"></i> **Priority:** low</p>
+                        <p><i class="fas fa-calendar-alt icon-gray"></i> **Date:** 2025-11-13</p>
+                    </div>
+                    <div class="task-image">
+                        <img src="https://via.placeholder.com/150x150?text=Recycling+Image+2" alt="Recycling image">
+                    </div>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-details">
+                        <p><i class="fas fa-map-marker-alt icon-red"></i> **Location:** dhanmondi 32</p>
+                        <p><i class="fas fa-spinner icon-red"></i> **Status:** <span class="status-tag rejected">Rejected</span></p>
+                        <p><i class="fas fa-dumpster-fire icon-gray"></i> **Type:** large item pickup</p>
+                        <p><i class="fas fa-clipboard-list icon-gray"></i> **Description:** old fridge</p>
+                        <p><i class="fas fa-exclamation-triangle icon-gray"></i> **Priority:** high</p>
+                        <p><i class="fas fa-calendar-alt icon-gray"></i> **Date:** 2025-11-12</p>
+                    </div>
+                    <div class="task-image">
+                        <img src="https://via.placeholder.com/150x150?text=Large+Item+Image+3" alt="Large item image">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="my_requests.js"></script>
+</body>
+</html>

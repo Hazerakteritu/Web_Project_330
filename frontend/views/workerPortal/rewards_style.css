@@ -1,0 +1,250 @@
+/* Basic Reset and Variables */
+:root {
+    --primary-color: #1abc9c; /* EcoClean Green */
+    --secondary-color: #ecf0f1; /* Light Gray Background */
+    --text-color: #34495e;
+    --unlocked-color: #f1c40f; /* Gold/Yellow for Unlocked */
+    --claimed-color: #2ecc71; /* Green for Claimed */
+    --redeem-color: #3498db; /* Blue for Redeem */
+    --locked-color: #95a5a6; /* Gray for Locked */
+    --self-row-bg: #e0f2f1; /* Light Green for Worker's Row */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Styling (Same as previous pages) */
+.sidebar {
+    width: 250px;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 20px 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 0 20px;
+}
+
+.nav-links {
+    list-style: none;
+}
+
+.nav-links li a {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.nav-links li.active a {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.nav-links li i {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+/* Main Content Styling */
+.main-content {
+    flex-grow: 1;
+    padding: 30px;
+}
+
+.page-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 30px;
+    padding: 15px 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.page-title i {
+    margin-right: 10px;
+}
+
+.section-header {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-size: 24px;
+    color: var(--text-color);
+}
+
+/* Total Points & Rank */
+.total-points-section {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+    border-top: 5px solid var(--primary-color);
+}
+
+.point-badge, .current-rank {
+    text-align: center;
+}
+
+.point-badge i {
+    font-size: 40px;
+    color: var(--unlocked-color);
+    margin-bottom: 10px;
+}
+
+.point-badge p, .current-rank p {
+    font-size: 16px;
+    color: #7f8c8d;
+    margin-bottom: 5px;
+}
+
+.total-value {
+    font-size: 48px;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.rank-value {
+    font-size: 48px;
+    font-weight: bold;
+    color: var(--rejected-color); /* Highlighted Rank */
+}
+
+/* Leaderboard Styling */
+.leaderboard-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.leaderboard-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.leaderboard-container th, .leaderboard-container td {
+    padding: 15px;
+    text-align: left;
+}
+
+.leaderboard-container thead tr {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.leaderboard-container tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.leaderboard-container .self-row {
+    background-color: var(--self-row-bg);
+    font-weight: bold;
+    border: 2px solid var(--primary-color);
+}
+
+/* Rewards Grid Styling */
+.rewards-grid {
+    display: flex;
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.reward-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    border-bottom: 5px solid;
+}
+
+.reward-card h3 {
+    margin-bottom: 5px;
+    color: var(--text-color);
+}
+
+.reward-card p {
+    font-size: 14px;
+    color: #7f8c8d;
+}
+
+/* Card Specific Styles */
+.reward-card.locked { border-color: var(--locked-color); }
+.reward-card.unlocked { border-color: var(--claimed-color); }
+.reward-card.redeem { border-color: var(--redeem-color); }
+
+/* Status Tags (Similar to dashboard, but different colours/sizes) */
+.status-tag {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+}
+
+.locked-tag { background-color: var(--locked-color); }
+.claimed-tag { background-color: var(--claimed-color); }
+.redeem-tag { background-color: var(--redeem-color); }
+
+.redeem-btn {
+    background-color: var(--redeem-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.redeem-btn:hover {
+    background-color: #2980b9;
+}
+
+/* Small Progress Bar */
+.progress-bar-small {
+    background-color: #ecf0f1;
+    border-radius: 5px;
+    height: 8px;
+    margin: 5px 0;
+    overflow: hidden;
+}
+
+.progress-bar-small .bar-fill {
+    height: 100%;
+    background-color: var(--primary-color);
+}

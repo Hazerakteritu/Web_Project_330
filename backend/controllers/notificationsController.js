@@ -28,7 +28,7 @@ const getAdminNotifications = (req, res) => {
             db.query(updateSql, (err2) => {
                 if(err2) console.error("Failed to auto-mark notifications as read:", err2);
             });
-        }
+        }  
 
         // Group notifications by type
         const groupedNotifications = {};
@@ -37,8 +37,8 @@ const getAdminNotifications = (req, res) => {
             groupedNotifications[n.type].push(n);
         });
 
-        // Get unread counts by type
-        const countSql = `
+        // Get unread counts by type 
+        const countSql = `v
             SELECT type, COUNT(*) AS unread_count
             FROM notifications
             WHERE status='unread'
