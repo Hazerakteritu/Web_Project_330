@@ -1,5 +1,3 @@
-
-
 const db = require("../config/db");
 
 
@@ -124,4 +122,75 @@ const completeTask = (req, res) => {
   });
 };
 
-module.exports = { workerAction, completeTask };
+
+
+// GET WORKER RANK
+const getWorkerRank = (req, res) => {
+    const worker_id = req.user.id;
+
+    const sql = `
+        SELECT worker_id, avg_rating, ranking FROM (
+            SELECT 
+                r.assigned_worker_id AS worker_id,
+                AVG(f.rating) AS avg_rating,
+                RANK() OVER (ORDER BY AVG(f.rating) DESC) AS ranking
+            FROM requests r
+            JOIN feedback f ON f.request_id = r.id
+            WHERE r.status = 'completed'
+            GROUP BY r.assigned_worker_id
+        ) AS ranked_workers
+        WHERE worker_id = ?
+    `;
+
+    db.query(sql, [worker_id], (err, result) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).json({ message: "Database error", error: err });
+        }
+
+        if (result.length === 0) {
+            return res.json({ avg_rating: 0, rank: null });
+        }
+
+        return res.json({
+            avg_rating: parseFloat(result[0].avg_rating).toFixed(2),
+            rank: result[0].ranking
+        });
+    });
+};
+
+
+// GET FULL LEADERBOARD
+const getLeaderboard = (req, res) => {
+    const sql = `
+        SELECT 
+            ranked.worker_id,
+            u.name,
+            ranked.avg_rating,
+            ranked.ranking
+        FROM (
+            SELECT 
+                r.assigned_worker_id AS worker_id,
+                AVG(f.rating) AS avg_rating,
+                RANK() OVER (ORDER BY AVG(f.rating) DESC) AS ranking
+            FROM requests r
+            JOIN feedback f ON f.request_id = r.id
+            WHERE r.status = 'completed'
+            GROUP BY r.assigned_worker_id
+        ) AS ranked
+        JOIN users u ON u.id = ranked.worker_id
+        ORDER BY ranked.ranking ASC
+    `;
+
+    db.query(sql, (err, results) => {
+        if (err) {
+            return res.status(500).json({ message: "Database error", error: err });
+        }
+        res.json(results);
+    });
+};
+
+
+
+
+module.exports = { workerAction, completeTask, getWorkerRank, getLeaderboard };
