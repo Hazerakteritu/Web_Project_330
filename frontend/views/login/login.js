@@ -21,12 +21,13 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
       // Token localStorage
       localStorage.setItem("token", result.token);
        localStorage.setItem("role", result.user.role);
+      localStorage.setItem("userName", result.user.name);
 
       // Redirect based on actual DB role
       if (result.user.role === "admin") {
         window.location.href = "../adminPortal/index.html";
       } else if (result.user.role === "worker") {
-        window.location.href = "../workerPortal/index.html";
+        window.location.href = "../workerPortal/worker_dashboard.html";
       } else {
         window.location.href = "../citizenPortal/index.html";
       }

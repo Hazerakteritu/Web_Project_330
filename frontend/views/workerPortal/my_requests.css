@@ -1,0 +1,207 @@
+/* Basic Reset and Variables (Same as dashboard) */
+:root {
+    --primary-color: #1abc9c; /* EcoClean Green */
+    --secondary-color: #ecf0f1; /* Light Gray Background */
+    --text-color: #34495e;
+    --in-progress-color: #3498db; /* Blue */
+    --completed-color: #2ecc71; /* Green */
+    --rejected-color: #e74c3c; /* Red */
+    --card-border-color: #bdc3c7; /* Light border */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Styling (Same as Dashboard) */
+.sidebar {
+    width: 250px;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 20px 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 0 20px;
+}
+
+.nav-links {
+    list-style: none;
+}
+
+.nav-links li a {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.nav-links li.active a {
+    background-color: rgba(255, 255, 255, 0.2);
+    /* Lighter shade on active for contrast */
+}
+
+.nav-links li i {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+/* Main Content Styling */
+.main-content {
+    flex-grow: 1;
+    padding: 30px;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    padding: 15px 0;
+    background-color: white;
+    border-radius: 8px;
+    padding-left: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.page-title i {
+    margin-right: 10px;
+}
+
+/* Filter Bar Styling */
+.filter-bar {
+    background-color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 5px solid var(--primary-color);
+}
+
+.filter-bar label {
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+#status-filter {
+    padding: 8px 12px;
+    border: 1px solid var(--card-border-color);
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* Task Card List View */
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.task-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-left: 5px solid var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.task-details {
+    flex-grow: 1;
+    margin-right: 20px;
+}
+
+.task-details p {
+    margin-bottom: 8px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.task-details p strong {
+    font-weight: normal; /* Less bold for the text */
+}
+
+.task-details i {
+    margin-right: 8px;
+    width: 20px;
+    text-align: center;
+}
+
+/* Icon Colors for Image Replication */
+.icon-red { color: var(--rejected-color); }
+.icon-gray { color: #95a5a6; }
+
+/* Status Tags (Copied from Dashboard CSS) */
+.status-tag {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 12px;
+    color: white;
+}
+
+.status-tag.in-progress {
+    background-color: var(--in-progress-color);
+}
+
+.status-tag.completed {
+    background-color: var(--completed-color);
+}
+
+.status-tag.rejected {
+    background-color: var(--rejected-color);
+}
+
+/* Task Image Styling */
+.task-image img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid var(--card-border-color);
+}
+
+/* Pending Status */
+.status-tag.pending {
+    background-color: #f39c12; /* orange */
+    color: white;
+}
+
+/* Assigned Status */
+.status-tag.assigned {
+    background-color: #9b59b6; /* purple */
+    color: white;
+}
+
+/* In Progress is already OK (in-progress) */
+
+/* Backend returns in_progress → but frontend uses in-progress */
+.status-tag.in_progress,
+.status-tag.in-progress {
+    background-color: #3498db; /* blue */
+    color: white;
+}
