@@ -34,12 +34,12 @@ const workerAction = (req, res) => {
     }
 
     // Create notification for task action
-     createNotification(action === "accept" ? "in_progress" : "rejected", id);
+    createNotification(action === "accept" ? "in_progress" : "rejected", id);
 
     res.json({ message: `Task ${action === "accept" ? "accepted" : "rejected"} successfully` });
   });
 
-  
+
 };
 
 //http://localhost:5000/api/worker/5/complete
@@ -72,8 +72,52 @@ const completeTask = (req, res) => {
     db.query(updateSql, [id], (err2) => {
       if (err2) return res.status(500).json({ message: "Database error", error: err2 });
 
-        // Create notification for task completion
-        createNotification("completed", id);
+      
+      // Create notification for task completion
+      createNotification("completed", id);
+
+
+      // reward for complete a task
+      const typeSql = `
+        SELECT request_type 
+        FROM requests 
+        WHERE id = ?
+      `;
+
+      db.query(typeSql, [id], (err3, result3) => {
+        if (err3) {
+          console.log("Failed to fetch request type:", err3);
+          return;
+        }
+
+        const requestType = result3[0].request_type;
+
+        let rewardColumn = "";
+        let rewardPoints = 0;
+
+        if (requestType === "waste") {
+          rewardColumn = "waste_reward_points";
+          rewardPoints = 5;
+        }
+        else if (requestType === "recycling") {
+          rewardColumn = "recycled_reward_points";
+          rewardPoints = 8;
+        }
+
+        if (rewardColumn) {
+          const rewardSql = `
+            UPDATE users
+            SET ${rewardColumn} = ${rewardColumn} + ?
+            WHERE id = ?
+          `;
+
+          db.query(rewardSql, [rewardPoints, worker_id], (err4) => {
+            if (err4) console.log("Worker reward update failed:", err4);
+            else console.log("Worker reward added!");
+          });
+        }
+      });
+
 
       res.json({ message: "Task marked as completed" });
     });
