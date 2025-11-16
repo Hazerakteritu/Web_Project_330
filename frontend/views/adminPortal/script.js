@@ -139,4 +139,6 @@ function showInlineImage(imagePath) {
 
   document.body.insertAdjacentHTML("beforeend", popupHTML);
 }
-
+function toggleSidebar() {
+  document.getElementById("sidebar").classList.toggle("open");
+}

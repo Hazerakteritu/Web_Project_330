@@ -114,3 +114,11 @@ body {
     grid-template-columns: 1fr;
   }
 }
+.notif-badge {
+  background: red;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 50%;
+  font-size: 12px;
+  margin-left: 6px;
+}
