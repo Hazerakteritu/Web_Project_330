@@ -64,6 +64,14 @@ CREATE TABLE notifications (
 );
 
 
-//add image
+--add image
 ALTER TABLE users ADD COLUMN profile_image VARCHAR(255);
 ALTER TABLE requests ADD COLUMN waste_image VARCHAR(255);
+
+
+CREATE TABLE rank_table (
+    worker_id INT PRIMARY KEY,
+    rating DECIMAL(3,2) NOT NULL,  -- average rating
+    rank INT,
+    FOREIGN KEY (worker_id) REFERENCES users(id) ON DELETE CASCADE
+);

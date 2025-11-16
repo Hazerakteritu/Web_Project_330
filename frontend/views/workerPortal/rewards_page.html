@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Points & Rewards - EcoClean</title>
+    <link rel="stylesheet" href="rewards_style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">EcoClean</div>
+            <ul class="nav-links">
+                <li><a href="worker_dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="worker_tasks.html"><i class="fas fa-list-check"></i> My Tasks</a></li>
+                <li class="active"><a href="#"><i class="fas fa-star"></i> Points & Ranks</a></li>
+                <li><a href="#"><i class="fas fa-bell"></i> Notifications</a></li>
+                <li><a href="#"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <div class="page-title">
+                <i class="fas fa-star"></i> Points & Ranks
+            </div>
+
+            <div class="total-points-section">
+                <div class="point-badge">
+                    <i class="fas fa-trophy"></i>
+                    <p>Total Lifetime Points</p>
+                    <span class="total-value">350</span>
+                </div>
+                <div class="current-rank">
+                    <p>Your Current Rank</p>
+                    <span class="rank-value">#3</span>
+                    <small>of 50 Workers (This Month)</small>
+                </div>
+            </div>
+
+            <h2 class="section-header"> Leaderboard</h2>
+            <div class="leaderboard-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Worker Name</th>
+                            <th>Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>Kamal H.</td><td>520</td></tr>
+                        <tr><td>2</td><td>Shikha B.</td><td>490</td></tr>
+                        <tr class="self-row"><td>3</td><td>Rajib H. (You)</td><td>350</td></tr>
+                        <tr><td>4</td><td>Mizan S.</td><td>310</td></tr>
+                        <tr><td>5</td><td>Fahim A.</td><td>280</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ekhane onnanno pages-er link update kora hobe
+            const dashboardLink = document.querySelector('.nav-links li:nth-child(1) a');
+            dashboardLink.href = 'worker_dashboard.html';
+
+            const tasksLink = document.querySelector('.nav-links li:nth-child(2) a');
+            tasksLink.href = 'worker_tasks.html';
+        });
+    </script>
+</body>
+</html>

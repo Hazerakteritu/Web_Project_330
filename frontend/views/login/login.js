@@ -21,14 +21,18 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
       // Token localStorage
       localStorage.setItem("token", result.token);
        localStorage.setItem("role", result.user.role);
+<<<<<<< HEAD
        localStorage.setItem("id", result.user.id);
 
+=======
+      localStorage.setItem("userName", result.user.name);
+>>>>>>> dfe63795506784a07dd18921283a9b3003ce70e2
 
       // Redirect based on actual DB role
       if (result.user.role === "admin") {
         window.location.href = "../adminDashboard/index.html";
       } else if (result.user.role === "worker") {
-        window.location.href = "../workerPortal/index.html";
+        window.location.href = "../workerPortal/worker_dashboard.html";
       } else {
         window.location.href = "../citizenPortal/index.html";
       }

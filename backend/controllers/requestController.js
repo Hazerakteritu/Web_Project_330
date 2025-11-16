@@ -13,7 +13,7 @@ const createRequest = (req, res) => {
     return res.status(400).json({ message: "Request type and location required" });
   }
 
-   const sql = `
+  const sql = `
     INSERT INTO requests (user_id, request_type, description, location, priority, waste_image)
     VALUES (?, ?, ?, ?, ?, ?)
   `;
@@ -24,6 +24,32 @@ const createRequest = (req, res) => {
     [user_id, request_type, description, location, priority || "normal", waste_image],
     (err, result) => {
       if (err) return res.status(500).json({ message: "Database error", error: err });
+
+      
+      // user reward for creating req
+      let rewardSql = "";
+
+      if (request_type === "waste") {
+        rewardSql = `
+          UPDATE users
+          SET waste_reward_points = waste_reward_points + 2
+          WHERE id = ?
+        `;
+      }
+      else if (request_type === "recycling") {
+        rewardSql = `
+          UPDATE users
+          SET recycled_reward_points = recycled_reward_points + 5
+          WHERE id = ?
+        `;
+      }
+
+      if (rewardSql) {
+        db.query(rewardSql, [user_id], (err2) => {
+          if (err2) console.log("Reward update failed", err2);
+        });
+      }
+
 
       // Create notification for new request
       createNotification("request", result.insertId);
@@ -141,4 +167,4 @@ const cancelRequest = (req, res) => {
 
 
 
-module.exports = { createRequest, getRequests, updateRequestStatus, cancelRequest};
+module.exports = { createRequest, getRequests, updateRequestStatus, cancelRequest };
