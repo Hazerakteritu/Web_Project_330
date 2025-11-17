@@ -41,7 +41,7 @@ const createFeedback = (req, res) => {
 
 
     // Find worker from request
-    const findWorkerSQL = `SELECT assigned_worker_id FROM requests WHERE id = ?`;
+    const findWorkerSQL = `SELECT assigned_worker_id, request_type FROM requests WHERE id = ?`;
 
     db.query(findWorkerSQL, [request_id], (err, workerResult) => {
       if (err) return res.status(500).json({ message: "Database error", error: err });
@@ -51,14 +51,19 @@ const createFeedback = (req, res) => {
       }
 
       const worker_id = workerResult[0].assigned_worker_id;
+      const request_type = workerResult[0].request_type;
 
       // Calculate reward points
       const reward = getRewardPoints(rating);
 
       // Update worker reward points
+      const rewardColumn = request_type === "waste" 
+          ? "waste_reward_points" 
+          : "recycled_reward_points";
+
       const updateSQL = `
         UPDATE users 
-        SET waste_reward_points = waste_reward_points + ?
+        SET ${rewardColumn} = ${rewardColumn} + ?
         WHERE id = ?
       `;
 
