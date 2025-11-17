@@ -18,10 +18,10 @@ function getRewardPoints(rating) {
 
 // Citizen submits feedback
 const createFeedback = (req, res) => {
-  const { request_id, rating, feedback_text } = req.body;
+  const { request_id, rating , feedback_text } = req.body;
   const user_id = req.user.id;
- 
-
+  
+  
   if (!request_id || !rating || !feedback_text) {
     return res.status(400).json({ message: "All fields are required" });
   }
@@ -59,6 +59,8 @@ const createFeedback = (req, res) => {
       const rewardColumn = request_type === "waste" 
           ? "waste_reward_points" 
           : "recycled_reward_points";
+
+        
 
       const updateSQL = `
         UPDATE users 
