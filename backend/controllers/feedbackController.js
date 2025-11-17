@@ -1,9 +1,7 @@
-// controllers/feedbackController.js
 const db = require("../config/db");
 
 const { createNotification } = require("../utils/notifications");
 const { createWorkerNotification } = require("../utils/workerNotifications");
-
 
 // Reward based on rating
 function getRewardPoints(rating) {
@@ -17,61 +15,40 @@ function getRewardPoints(rating) {
 }
 
 // Citizen submits feedback
-const createFeedback = (req, res) => {
-  const { request_id, rating, feedback_text } = req.body;
-  const user_id = req.user.id;
+const submitFeedback = (req, res) => {
+    const { request_id, rating, feedback_text } = req.body;
+    const citizen_id = req.user.id;
 
-  if (!request_id || !rating || !feedback_text) {
-    return res.status(400).json({ message: "All fields are required" });
-  }
+    // Step–1: Get assigned worker from the request
+    const workerQuery = `SELECT assigned_worker_id FROM requests WHERE id = ?`;
 
-  // Insert feedback
-  const sql = `
-    INSERT INTO feedback (request_id, user_id, rating, feedback_text)
-    VALUES (?, ?, ?, ?)
-  `;
+    db.query(workerQuery, [request_id], (err, workerResult) => {
+        if (err) return res.status(500).json({ message: "DB error" });
 
-  db.query(sql, [request_id, user_id, rating, feedback_text], (err, result) => {
-    if (err) return res.status(500).json({ message: "Database error", error: err });
+        if (workerResult.length === 0)
+            return res.status(404).json({ message: "Request not found" });
 
-    // Create notification for new feedback
-    createNotification("feedback", result.insertId);
+        const worker_id = workerResult[0].assigned_worker_id;
 
-    createWorkerNotification("feedback", result.insertId);
+        // Step–2: Insert feedback
+        const sql = `
+            INSERT INTO feedback (request_id, user_id, rating, feedback_text)
+            VALUES (?, ?, ?, ?)
+        `;
 
+        db.query(sql, [request_id, citizen_id, rating, feedback_text], (err, result) => {
+            if (err) return res.status(500).json({ message: "DB error inserting feedback" });
 
-    // Find worker from request
-    const findWorkerSQL = `SELECT worker_id FROM requests WHERE id = ?`;
+            const feedback_id = result.insertId;
 
-    db.query(findWorkerSQL, [request_id], (err, workerResult) => {
-      if (err) return res.status(500).json({ message: "Database error", error: err });
+            // Step–3: Send worker notification IF worker exists
+            if (worker_id) {
+                createWorkerNotification(worker_id, "feedback", feedback_id);
+            }
 
-      if (workerResult.length === 0) {
-        return res.status(404).json({ message: "No worker found for this request" });
-      }
-
-      const worker_id = workerResult[0].worker_id;
-
-      // Calculate reward points
-      const reward = getRewardPoints(rating);
-
-      // Update worker reward points
-      const updateSQL = `
-        UPDATE users 
-        SET waste_reward_points = waste_reward_points + ?
-        WHERE id = ?
-      `;
-
-      db.query(updateSQL, [reward, worker_id], (err) => {
-        if (err) return res.status(500).json({ message: "Reward update error", error: err });
-
-        res.status(201).json({
-          message: "Feedback submitted and worker reward updated",
-          reward_added: reward
+            res.json({ message: "Feedback submitted successfully" });
         });
-      });
     });
-  });
 };
 
-module.exports = { createFeedback };
+module.exports = { submitFeedback };

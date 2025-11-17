@@ -2,11 +2,11 @@
 const express = require("express");
 const { protect } = require("../middleware/authMiddleware");
 const { authorizeRoles } = require("../middleware/roleMiddleware");
-const { createFeedback } = require("../controllers/feedbackController");
+const { submitFeedback } = require("../controllers/feedbackController");
 
 const router = express.Router();
 
 // Citizen gives feedback for a completed request
-router.post("/", protect, authorizeRoles("citizen"), createFeedback);
+router.post("/", protect, authorizeRoles("citizen"), submitFeedback);
 
 module.exports = router;

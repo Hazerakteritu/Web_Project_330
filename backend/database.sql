@@ -101,3 +101,9 @@ CREATE TABLE password_resets (
   expires_at DATETIME NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+ALTER TABLE worker_notifications
+ADD COLUMN worker_id INT NOT NULL AFTER id,
+ADD CONSTRAINT fk_worker
+    FOREIGN KEY (worker_id) REFERENCES users(id)
+    ON DELETE CASCADE;
