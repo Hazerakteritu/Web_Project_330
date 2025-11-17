@@ -248,3 +248,8 @@ body {
     height: 100%;
     background-color: var(--primary-color);
 }
+
+.self-row {
+    background-color: #d9f0ff; /* light blue */
+    font-weight: bold; /* text bold */
+}

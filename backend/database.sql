@@ -75,3 +75,13 @@ CREATE TABLE rank_table (
     rank INT,
     FOREIGN KEY (worker_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+
+--for forget password OTP
+CREATE TABLE password_resets (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(100) NOT NULL,
+  otp VARCHAR(10) NOT NULL,
+  expires_at DATETIME NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
