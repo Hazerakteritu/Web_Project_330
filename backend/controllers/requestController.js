@@ -126,7 +126,7 @@ const updateRequestStatus = (req, res) => {
     return res.status(400).json({ message: "Invalid status" });
   }
 
-  // et request owner
+  // GET REQUEST OWNER FIRST
   const findUserSql = "SELECT user_id FROM requests WHERE id = ?";
 
   db.query(findUserSql, [id], (err2, userResult) => {
@@ -136,7 +136,6 @@ const updateRequestStatus = (req, res) => {
 
     const ownerId = userResult[0].user_id;
 
-    // Now update the request
     const sql = `
       UPDATE requests SET status = ?, assigned_worker_id = ?
       WHERE id = ?
@@ -150,8 +149,8 @@ const updateRequestStatus = (req, res) => {
         createWorkerNotification("assigned", id);
 
         createUserNotification(
-          ownerId,            // request owner
-          assigned_worker_id, // worker ID
+          ownerId,
+          assigned_worker_id,
           "assigned",
           id,
           `Your request #${id} has been assigned to a worker.`
@@ -179,20 +178,18 @@ const updateRequestStatus = (req, res) => {
 // Cancel a pending request (Citizen)
 const cancelRequest = (req, res) => {
   const { id } = req.params;
-  const user_id = req.user.id; // from JWT
+  const user_id = req.user.id;
 
-  // Only allow cancelling pending requests owned by this user
   const checkSql = `
-    SELECT * FROM requests WHERE id = ? AND user_id = ? AND status = 'pending'
+    SELECT * FROM requests 
+    WHERE id = ? AND user_id = ? AND status = 'pending'
   `;
 
   db.query(checkSql, [id, user_id], (err, results) => {
     if (err) return res.status(500).json({ message: "Database error", error: err });
 
     if (results.length === 0) {
-      return res
-        .status(403)
-        .json({ message: "You can only cancel your own pending requests" });
+      return res.status(403).json({ message: "You can only cancel your own pending requests" });
     }
 
     const updateSql = `
@@ -201,11 +198,11 @@ const cancelRequest = (req, res) => {
 
     db.query(updateSql, [id], (err2) => {
       if (err2) return res.status(500).json({ message: "Database error", error: err2 });
+
       res.json({ message: "Request cancelled successfully" });
     });
   });
 };
-
 
 
 

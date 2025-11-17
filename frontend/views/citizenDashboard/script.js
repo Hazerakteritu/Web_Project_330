@@ -105,7 +105,7 @@ async function loadRewards() {
 }
 async function submitFeedback() {
   const feedback_text = document.getElementById("feedbackText").value;
-  const rating = document.getElementById("rating").value;
+  const rating = Number(document.getElementById("rating").value);
   const request_id = document.getElementById("requestId").value;
 
   if (!feedback_text || !rating || !request_id) {

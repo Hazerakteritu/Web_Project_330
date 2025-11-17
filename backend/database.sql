@@ -114,3 +114,9 @@ CREATE TABLE user_notifications (
     FOREIGN KEY (worker_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
+
+ALTER TABLE worker_notifications
+ADD COLUMN worker_id INT NOT NULL AFTER id,
+ADD CONSTRAINT fk_worker
+    FOREIGN KEY (worker_id) REFERENCES users(id)
+    ON DELETE CASCADE;
