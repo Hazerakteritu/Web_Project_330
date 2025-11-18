@@ -146,10 +146,10 @@ const updateRequestStatus = (req, res) => {
 
       // IF ASSIGNED
       if (status === "assigned" && assigned_worker_id) {
-        createWorkerNotification("assigned", id);
+        createWorkerNotification(assigned_worker_id, "assigned", id);
 
         createUserNotification(
-          ownerId,
+          ownerId, 
           assigned_worker_id,
           "assigned",
           id,
