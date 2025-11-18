@@ -149,7 +149,7 @@ const updateRequestStatus = (req, res) => {
         createWorkerNotification(assigned_worker_id, "assigned", id);
 
         createUserNotification(
-          ownerId,
+          ownerId, 
           assigned_worker_id,
           "assigned",
           id,

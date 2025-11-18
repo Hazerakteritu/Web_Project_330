@@ -20,7 +20,25 @@ const getUserNotifications = (req, res) => {
         if (err) 
             return res.status(500).json({ message: "Database error", error: err });
 
-        res.json(results);
+        const unreadCounts = {
+            completed: 0,
+            assigned: 0,
+            rejected: 0
+        };
+
+        results.forEach(n => {
+            if (n.status === "unread") {
+                if (n.type === "completed") unreadCounts.completed++;
+                if (n.type === "assigned") unreadCounts.assigned++;
+                if (n.type === "rejected") unreadCounts.rejected++;
+            }
+        });
+
+        // --- Send correct response ---
+        res.json({
+            notifications: results,
+            unreadCounts
+        });
     });
 };
 

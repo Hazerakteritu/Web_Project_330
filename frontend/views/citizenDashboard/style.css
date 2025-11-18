@@ -44,7 +44,9 @@ body {
 .sidebar ul { list-style: none; }
 
 .sidebar ul li { margin: 15px 0; }
-
+.sidebar ul li i{
+  margin-right: 10px;
+}
 .sidebar ul li a {
   text-decoration: none;
   color: #fff;
@@ -90,7 +92,12 @@ header h1 { color: #059669; }
 
 .user-info { display:flex; align-items:center; gap:10px; font-weight:600; }
 
-.user-info img { border-radius:50%; }
+.user-info img {
+  width: 40px;        
+  height: 40px;       
+  object-fit: cover; 
+  border-radius: 50%; 
+}
 
 .cards {
   display: grid;
@@ -114,7 +121,9 @@ header h1 { color: #059669; }
   font-size: 32px;
   margin-bottom: 10px;
 }
-
+.card i{
+  color: #059669;
+}
 .activity h2 { margin-bottom:15px; color:#059669; }
 
 table {
@@ -134,6 +143,9 @@ tbody tr:nth-child(even) { background: #f9fafb; }
 .status.pending { background: #f59e0b; }
 .status.progress { background: #3b82f6; }
 .status.completed { background: #10b981; }
+.status.rejected { background: red; }
+.status.assigned { background: rgb(62, 203, 189); }
+
 
 
 .feedback {

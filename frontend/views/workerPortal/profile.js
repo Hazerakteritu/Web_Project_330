@@ -161,29 +161,24 @@ document.addEventListener("blur", function (e) {
     parentSpan.textContent = newValue; 
   }
 }, true);
-async function loadNotificationCount() {
-  try {
-    const res = await fetch("http://localhost:5000/api/notifications/user", {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
 
-    const data = await res.json();
+const NOTIF_URL = "http://localhost:5000/api/worker_notifications/worker";
 
-    const unreadCounts = data.unreadCounts || {};
+async function loadWorkerNotifications() {
+    try {
+        const res = await fetch(NOTIF_URL, {
+            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+        });
 
-    const totalUnread =
-      (unreadCounts.completed || 0) +
-      (unreadCounts.assigned || 0) +
-      (unreadCounts.rejected || 0);
+        const data = await res.json();
+        const unread = data.unreadCounts || {};
 
-    // dashboard sidebar count
-    if (document.getElementById("notifCount")) {
-      document.getElementById("notifCount").innerText = totalUnread;
+        const totalUnread = (unread.assigned || 0) + (unread.feedback || 0);
+
+        document.getElementById("notifIconCount").innerText = totalUnread;
+
+    } catch (error) {
+        console.error("Notification load failed:", error);
     }
-  } catch (err) {
-    console.log("Notification Load Error", err);
-  }
 }
-loadNotificationCount();
+loadWorkerNotifications();
