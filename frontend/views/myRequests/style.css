@@ -54,7 +54,9 @@ body {
 .sidebar ul li a.active {
   background: rgba(255, 255, 255, 0.2);
 }
-
+.sidebar ul li i{
+  margin-right: 10px;
+}
 .main-content {
   flex: 1;
   width: 100%;
@@ -146,7 +148,7 @@ header h1 {
 }
 
 .pending { background: #f59e0b; }
-.assigned { background: #3b82f6; }
+.assigned { background: rgb(62, 203, 189); }
 .in_progress { background: #2563eb; }
 .completed { background: #10b981; }
 .rejected { background: #ef4444; }
@@ -174,6 +176,15 @@ header h1 {
   cursor: pointer;
   z-index: 9999;
 }
+.notif-badge {
+  background: red;
+  color: white;
+  padding: 6px 8px;
+  border-radius: 50%;
+  font-size: 12px;
+  margin-left: 6px;
+}
+
 
 .sidebar.open {
   transform: translateX(0);

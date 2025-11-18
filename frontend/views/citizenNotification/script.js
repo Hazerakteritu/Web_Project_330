@@ -1,82 +1,98 @@
 const NOTIF_URL = "http://localhost:5000/api/notifications";
-let notifications = []; // store all notifications
 
-// Load notifications and update counters
+let notifications = []; 
 async function loadNotifications() {
-  const response = await fetch(NOTIF_URL, {
+  const response = await fetch(`${NOTIF_URL}/user`, {
     headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
   });
 
   const result = await response.json();
+  console.log(result)
 
-  // Store all notifications
   notifications = result.notifications || [];
+  console.log(notifications)
 
-  // Unread counter object
   const unreadCounts = result.unreadCounts || {};
 
-  // Set category counters
-  document.getElementById("newReqCount").innerText = unreadCounts.request || 0;
-  document.getElementById("feedbackCount").innerText = unreadCounts.feedback || 0;
-  document.getElementById("rejectedCount").innerText = unreadCounts.rejected || 0;
   document.getElementById("completedCount").innerText = unreadCounts.completed || 0;
+  document.getElementById("assignedCount").innerText = unreadCounts.assigned || 0;
+  document.getElementById("rejectedCount").innerText = unreadCounts.rejected || 0;
 
-  // Total sidebar count
+  
   const totalUnread =
-    (unreadCounts.request || 0) +
-    (unreadCounts.feedback || 0) +
-    (unreadCounts.rejected || 0) +
-    (unreadCounts.completed || 0);
+    (unreadCounts.completed || 0) +
+    (unreadCounts.assigned || 0) +
+    (unreadCounts.rejected || 0);
 
   document.getElementById("notifCount").innerText = totalUnread;
 }
 
 
-// Display selected category list and mark unread → read
+
+// Display selected category and mark unread → read
 function displayCategory(type, containerId, countId) {
 
   const container = document.getElementById(containerId);
-  container.innerHTML = ""; // clear previous
+  container.innerHTML = "";
 
-  // Filter unread notifications by category
-  const unreadList = notifications.filter(n => n.type === type && n.status === "unread");
+  const unreadList = notifications.filter(
+    n => n.type === type && n.status === "unread"
+  );
 
-  // If no unread → collapse and exit
   if (unreadList.length === 0) {
     container.style.display = "none";
     return;
   }
 
-  // Create UI for unread notifications
   unreadList.forEach(item => {
     const div = document.createElement("div");
     div.className = "notif-item";
-
     let text = "";
 
-    switch (type) {
-      case "request":
-        text = `📩 ${item.citizen_name} requested: <b>${item.request_type}</b>`;
-        break;
+    // COMPLETED
+    if (type === "completed") {
+      text = `
+        ✅ Request ID: <b>${item.request_id}</b><br>
+        Completed by: <b>${item.worker_name}</b><br>
+        📞 ${item.worker_phone}<br>
+        ✉️ ${item.worker_email}
+      `;
+    }
 
-      case "feedback":
-        text = `⭐ ${item.citizen_name}: "<b>${item.feedback_text}</b>"`;
-        break;
+    // ASSIGNED
+    if (type === "assigned") {
+      text = `
+        📌 Request ID: <b>${item.request_id}</b><br>
+        Assigned to: <b>${item.worker_name}</b><br>
+        📞 ${item.worker_phone}<br>
+        ✉️ ${item.worker_email}
+      `;
+    }
 
-      case "rejected":
-        text = `❌ ${item.citizen_name} - Reason: <b>${item.reason || "Not provided"}</b>`;
-        break;
-
-      case "completed":
-        text = `✅ ${item.citizen_name}'s <b>${item.request_type}</b> completed`;
-        break;
+    // REJECTED
+    if (type === "rejected") {
+      if (item.rejected_by === "admin") {
+        text = `
+          ❌ Request ID: <b>${item.request_id}</b><br>
+          Rejected by: <b>Admin</b><br>
+          Reason: ${item.reason || "Not provided"}
+        `;
+      } else {
+        text = `
+          ❌ Request ID: <b>${item.request_id}</b><br>
+          Rejected by: <b>${item.worker_name}</b><br>
+          📞 ${item.worker_phone}<br>
+          ✉️ ${item.worker_email}<br>
+          Reason: ${item.reason || "Not provided"}
+        `;
+      }
     }
 
     div.innerHTML = text;
     container.appendChild(div);
 
-    // Mark as read in backend — only when category opened
-    fetch(`${NOTIF_URL}/${item.id}/read`, {
+    // Mark notification as read (backend)
+    fetch(`${NOTIF_URL}/user/${item.id}/read`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -84,20 +100,20 @@ function displayCategory(type, containerId, countId) {
       }
     });
 
-    // Update in local notifications array so reload না দেওয়া পর্যন্ত আর দেখা যাবে না
+    // Update local status
     item.status = "read";
   });
 
   container.style.display = "block";
 
-  // Reduce unread count for only this category
+  // Category badge = 0
   document.getElementById(countId).innerText = "0";
 
-  // Reduce sidebar total counter
+  // Reduce total counter
   const oldTotal = Number(document.getElementById("notifCount").innerText);
-  const newTotal = oldTotal - unreadList.length;
-  document.getElementById("notifCount").innerText = newTotal >= 0 ? newTotal : 0;
+  document.getElementById("notifCount").innerText = oldTotal - unreadList.length;
 }
+
 
 
 // Add click listeners to headings
@@ -114,6 +130,7 @@ document.querySelectorAll(".notif-toggle").forEach(h => {
 
 // Initial load
 loadNotifications();
+
 function toggleSidebar() {
   document.getElementById("sidebar").classList.toggle("open");
 }

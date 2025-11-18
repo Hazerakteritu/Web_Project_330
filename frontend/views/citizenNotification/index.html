@@ -2,46 +2,63 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Admin Notifications</title>
+  <title>User Notifications</title>
   <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+
   <button class="hamburger" onclick="toggleSidebar()">☰</button>
+
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
     <h2>EcoClean</h2>
     <ul>
-      <li><a href="../citizenDashboard/index.html" class="active">🏠 Dashboard</a></li>
-      <li><a href="../myRequests/index.html">📝 My Requests</a></li>
-      <li><a href="../new requests/index.html">➕ New Request</a></li>
-      <li><a href="../citizenNotification/index.html">🔔 Notifications <span id="notifCount" class="notif-badge">0</span></a></li>
-      <li><a href="../profile/index.html">👤 Profile</a></li>
-      <li><a href="#">⚙️ Settings</a></li>
-      <li><a href="../logout/index.html">🚪 Logout</a></li>
+      <li><a href="../citizenDashboard/index.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+      <li><a href="../myRequests/index.html"><i class="fa-solid fa-code-pull-request"></i>My Requests</a></li>
+      <li><a href="../new requests/index.html"><i class="fa-solid fa-plus"></i>New Request</a></li>
+      <li><a href="../citizenNotification/index.html"  class="active"><i class="fa-solid fa-bell"></i>Notifications <span id="notifCount" class="notif-badge">0</span></a></li>
+      <li><a href="../profile/index.html"><i class="fa-solid fa-address-card"></i>Profile</a></li>
+      <li><a href="../logout/index.html"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
     </ul>
   </div>
 
   <!-- Main Content -->
   <div class="main-content">
-    <h1>🔔 Notifications</h1>
+    <h1><i class="fa-solid fa-bell" style="color:#f7c948; margin-right: 10px;"></i>Notifications</h1>
 
+    <!-- Completed -->
     <div class="notif-section">
-      <h2 class="notif-toggle" data-type="request" data-container="newRequests" data-count="newReqCount">
-         Completed Requests <span id="newReqCount" class="notif-badge">0</span>
+      <h2 class="notif-toggle"
+          data-type="completed"
+          data-container="completedRequests"
+          data-count="completedCount">
+          Completed Requests
+          <span id="completedCount" class="notif-badge">0</span>
       </h2>
-      <div id="newRequests" class="notif-list"></div>
+      <div id="completedRequests" class="notif-list"></div>
     </div>
 
+    <!-- Assigned -->
     <div class="notif-section">
-      <h2 class="notif-toggle" data-type="feedback" data-container="newFeedback" data-count="feedbackCount">
-        Assigned Requests <span id="feedbackCount" class="notif-badge">0</span>
+      <h2 class="notif-toggle"
+          data-type="assigned"
+          data-container="assignedRequests"
+          data-count="assignedCount">
+          Assigned Requests
+          <span id="assignedCount" class="notif-badge">0</span>
       </h2>
-      <div id="newFeedback" class="notif-list"></div>
+      <div id="assignedRequests" class="notif-list"></div>
     </div>
 
+    <!-- Rejected -->
     <div class="notif-section">
-      <h2 class="notif-toggle" data-type="rejected" data-container="rejectedRequests" data-count="rejectedCount">
-        Rejected Requests <span id="rejectedCount" class="notif-badge">0</span>
+      <h2 class="notif-toggle"
+          data-type="rejected"
+          data-container="rejectedRequests"
+          data-count="rejectedCount">
+          Rejected Requests
+          <span id="rejectedCount" class="notif-badge">0</span>
       </h2>
       <div id="rejectedRequests" class="notif-list"></div>
     </div>
