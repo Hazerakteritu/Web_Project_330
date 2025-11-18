@@ -5,25 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>User Profile</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   </head>
   <body>
     <div class="container">
       <!-- Sidebar -->
-      <div class="sidebar">
-        <h2>EcoClean</h2>
-        <ul>
-          <li><a href="../citizenDashboard/index.html">🏠 Dashboard</a></li>
-          <li>
-            <a href="../myRequests/index.html" class="active">📝 My Requests</a>
-          </li>
-          <li><a href="../new requests/index.html">➕ New Request</a></li>
-          <li><a href="#">🔔 Notifications</a></li>
-          <li><a href="../profile/index.html">👤 Profile</a></li>
-          <li><a href="#">⚙️ Settings</a></li>
-          <li><a href="../logout/index.html">🚪 Logout</a></li>
-        </ul>
-      </div>
-
+  <div class="sidebar" id="sidebar">
+    <h2>EcoClean</h2>
+    <ul>
+      <li><a href="../citizenDashboard/index.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+      <li><a href="../myRequests/index.html"><i class="fa-solid fa-code-pull-request"></i>My Requests</a></li>
+      <li><a href="../new requests/index.html"><i class="fa-solid fa-plus"></i>New Request</a></li>
+      <li><a href="../citizenNotification/index.html"><i class="fa-solid fa-bell"></i>Notifications <span id="notifCount" class="notif-badge">0</span></a></li>
+      <li><a href="../profile/index.html"  class="active"><i class="fa-solid fa-address-card"></i>Profile</a></li>
+      <li><a href="../logout/index.html"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+    </ul>
+  </div>
       <!-- Profile Section -->
       <main class="profile-section">
         <div class="profile-card">

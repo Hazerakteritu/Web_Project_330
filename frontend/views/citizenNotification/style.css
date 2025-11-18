@@ -42,7 +42,9 @@ body {
 .sidebar ul li a.active {
   background: rgba(255, 255, 255, 0.2);
 } 
-
+.sidebar ul li i{
+  margin-right: 10px;
+}
 .notif-badge {
   background: red;
   color: white;
@@ -58,7 +60,10 @@ body {
   padding: 30px;
 }
 
-h1 { margin-bottom: 25px; }
+h1 { 
+  margin-bottom: 25px; 
+  color: #059669;
+}
 
 .notif-section {
   background: white;

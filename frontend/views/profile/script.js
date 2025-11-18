@@ -161,3 +161,29 @@ document.addEventListener("blur", function (e) {
     parentSpan.textContent = newValue; 
   }
 }, true);
+async function loadNotificationCount() {
+  try {
+    const res = await fetch("http://localhost:5000/api/notifications/user", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    const data = await res.json();
+
+    const unreadCounts = data.unreadCounts || {};
+
+    const totalUnread =
+      (unreadCounts.completed || 0) +
+      (unreadCounts.assigned || 0) +
+      (unreadCounts.rejected || 0);
+
+    // dashboard sidebar count
+    if (document.getElementById("notifCount")) {
+      document.getElementById("notifCount").innerText = totalUnread;
+    }
+  } catch (err) {
+    console.log("Notification Load Error", err);
+  }
+}
+loadNotificationCount();
