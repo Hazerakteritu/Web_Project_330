@@ -14,6 +14,9 @@ const notificationsRoutes = require("./routes/notificationsRoutes");
 
 
 const workerNotifRoutes = require("./routes/notificationsRoutes");
+const updateWorkerRoutes = require("./routes/workerRoutes");
+
+
 
 dotenv.config();
 
@@ -33,7 +36,13 @@ app.use("/api/worker", workerRoutes);
 app.use("/api/notifications", notificationsRoutes);
 
 
+
 app.use("/api/worker_notifications", workerNotifRoutes);
+
+app.use("/api/workers", updateWorkerRoutes);
+
+
+
 // Default route
 app.get("/", (req, res) => {
   res.send("Server is running successfully!");
