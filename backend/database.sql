@@ -129,3 +129,10 @@ CREATE TABLE worker_status (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (worker_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+
+ALTER TABLE worker_status ADD location VARCHAR(255) NOT NULL;
+ALTER TABLE requests 
+MODIFY status 
+ENUM('pending', 'assigned', 'in_progress', 'completed', 'rejected', 'cancelled') 
+DEFAULT 'pending';
