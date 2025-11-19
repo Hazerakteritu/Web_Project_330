@@ -53,14 +53,15 @@ const getFreeWorkers = (req, res) => {
     }
 
    const sql = `
-        SELECT 
-            ws.worker_id AS id, 
-            u.name
-        FROM worker_status ws
-        JOIN users u ON ws.worker_id = u.id
-        WHERE ws.location = ? 
-        AND ws.status = 'free'
+    SELECT 
+        ws.worker_id AS id, 
+        u.name
+    FROM worker_status ws
+    JOIN users u ON ws.worker_id = u.id
+    WHERE ? LIKE CONCAT('%', ws.location, '%')
+      AND ws.status = 'free'
     `;
+
     console.log("Location param:", req.query.location);
 
 
