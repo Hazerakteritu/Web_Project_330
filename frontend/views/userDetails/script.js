@@ -8,9 +8,12 @@ document
   .addEventListener("change", loadRequests);
 
 async function loadRequests() {
+  const userId = localStorage.getItem("selected_user_id");
   const status = document.getElementById("statusFilter").value;
-
-  const url = status ? `${API_URL}?status=${status}` : API_URL;
+  let url = `${API_URL}?userId=${userId}`;
+  if (status) {
+    url += `&status=${status}`;
+  }
 
   const response = await fetch(url, {
     headers: {

@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.querySelector("input[name='image']").addEventListener("change", function () {
   const formData = new FormData();
-  formData.append("image", this.files[0]); // name MUST match backend
+  formData.append("image", this.files[0]);
 
   fetch(`${BASE_URL}/profile/pic`, {
     method: "PUT",

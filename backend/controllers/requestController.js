@@ -28,8 +28,6 @@ const createRequest = (req, res) => {
     (err, result) => {
       if (err) return res.status(500).json({ message: "Database error", error: err });
 
-
-      // user reward for creating req
       let rewardSql = "";
 
       if (request_type === "waste") {
@@ -53,8 +51,6 @@ const createRequest = (req, res) => {
         });
       }
 
-
-      // Create notification for new request
       createNotification("request", result.insertId);
 
       res.status(201).json({
@@ -69,7 +65,7 @@ const createRequest = (req, res) => {
 //get req
 const getRequests = (req, res) => {
   const { role, id: user_id } = req.user;
-  const { status } = req.query; // query filter e.g. /api/requests?status=pending
+  const { status, userId, workerId } = req.query;
 
   let sql = "";
   let params = [];
@@ -79,12 +75,28 @@ const getRequests = (req, res) => {
       SELECT r.*, u.name AS user_name, u.email AS user_email
       FROM requests r
       JOIN users u ON r.user_id = u.id
-      ${status ? "WHERE r.status = ?" : ""}
-      ORDER BY r.created_at DESC
+      WHERE 1=1
     `;
-    if (status) params.push(status);
 
-  } else if (role === "worker") {
+    if (workerId) { 
+      sql += " AND r.assigned_worker_id = ?";
+      params.push(workerId);
+    }
+
+    if (userId) {
+      sql += " AND r.user_id = ?";
+      params.push(userId);
+    }
+
+    if (status) {
+      sql += " AND r.status = ?";
+      params.push(status);
+    }
+
+    sql += " ORDER BY r.created_at DESC";
+  }
+
+  else if (role === "worker") {
     sql = `
       SELECT r.*, u.name AS user_name, u.email AS user_email
       FROM requests r
@@ -95,10 +107,12 @@ const getRequests = (req, res) => {
     `;
     params.push(user_id);
     if (status) params.push(status);
+  }
 
-  } else {
+  else {
     sql = `
-      SELECT * FROM requests
+      SELECT *
+      FROM requests
       WHERE user_id = ?
       ${status ? "AND status = ?" : ""}
       ORDER BY created_at DESC
@@ -112,8 +126,6 @@ const getRequests = (req, res) => {
     res.json(results);
   });
 };
-
-
 
 
 // Update req status (Admin)

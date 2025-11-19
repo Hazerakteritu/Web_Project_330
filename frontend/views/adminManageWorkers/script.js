@@ -20,15 +20,14 @@ function showUsers(users) {
   const container = document.getElementById("usersContainer");
   container.innerHTML = "";
 
-  // extract worker list correctly
-  const list = users.workers; // backend guaranteed workers array
+  const list = users.workers; 
 
   if (!Array.isArray(list)) {
     console.error("Workers is not an array");
     return;
   }
 
-  // Only show workers
+ 
   const workerUsers = list.filter(u => u.role === "worker");
 
   workerUsers.forEach(u => {
@@ -65,13 +64,10 @@ async function loadNotifications() {
 
   const result = await response.json();
 
-  // Store all notifications
   notifications = result.notifications || [];
 
-  // Unread counter object
   const unreadCounts = result.unreadCounts || {};
 
-  // Total sidebar count
   const totalUnread =
     (unreadCounts.request || 0) +
     (unreadCounts.feedback || 0) +

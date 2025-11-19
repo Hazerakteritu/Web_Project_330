@@ -27,9 +27,6 @@ async function loadNotifications() {
   document.getElementById("notifCount").innerText = totalUnread;
 }
 
-
-
-// Display selected category and mark unread → read
 function displayCategory(type, containerId, countId) {
 
   const container = document.getElementById(containerId);
@@ -83,7 +80,6 @@ function displayCategory(type, containerId, countId) {
     div.innerHTML = text;
     container.appendChild(div);
 
-    // Mark notification as read (backend)
     fetch(`${NOTIF_URL}/user/${item.id}/read`, {
       method: "PUT",
       headers: {
@@ -92,23 +88,17 @@ function displayCategory(type, containerId, countId) {
       }
     });
 
-    // Update local status
     item.status = "read";
   });
 
   container.style.display = "block";
 
-  // Category badge = 0
   document.getElementById(countId).innerText = "0";
 
-  // Reduce total counter
   const oldTotal = Number(document.getElementById("notifCount").innerText);
   document.getElementById("notifCount").innerText = oldTotal - unreadList.length;
 }
 
-
-
-// Add click listeners to headings
 document.querySelectorAll(".notif-toggle").forEach(h => {
   h.addEventListener("click", () => {
     const type = h.dataset.type;

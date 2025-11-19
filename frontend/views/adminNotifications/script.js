@@ -1,7 +1,5 @@
 const NOTIF_URL = "http://localhost:5000/api/notifications";
-let notifications = []; // store all notifications
-
-// Load notifications and update counters
+let notifications = []; 
 async function loadNotifications() {
   const response = await fetch(NOTIF_URL, {
     headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
@@ -32,22 +30,18 @@ async function loadNotifications() {
 }
 
 
-// Display selected category list and mark unread → read
 function displayCategory(type, containerId, countId) {
 
   const container = document.getElementById(containerId);
-  container.innerHTML = ""; // clear previous
+  container.innerHTML = "";
 
-  // Filter unread notifications by category
   const unreadList = notifications.filter(n => n.type === type && n.status === "unread");
 
-  // If no unread → collapse and exit
   if (unreadList.length === 0) {
     container.style.display = "none";
     return;
   }
 
-  // Create UI for unread notifications
   unreadList.forEach(item => {
     const div = document.createElement("div");
     div.className = "notif-item";
@@ -75,7 +69,6 @@ function displayCategory(type, containerId, countId) {
     div.innerHTML = text;
     container.appendChild(div);
 
-    // Mark as read in backend — only when category opened
     fetch(`${NOTIF_URL}/${item.id}/read`, {
       method: "PUT",
       headers: {
@@ -84,23 +77,18 @@ function displayCategory(type, containerId, countId) {
       }
     });
 
-    // Update in local notifications array so reload না দেওয়া পর্যন্ত আর দেখা যাবে না
     item.status = "read";
   });
 
   container.style.display = "block";
 
-  // Reduce unread count for only this category
   document.getElementById(countId).innerText = "0";
 
-  // Reduce sidebar total counter
   const oldTotal = Number(document.getElementById("notifCount").innerText);
   const newTotal = oldTotal - unreadList.length;
   document.getElementById("notifCount").innerText = newTotal >= 0 ? newTotal : 0;
 }
 
-
-// Add click listeners to headings
 document.querySelectorAll(".notif-toggle").forEach(h => {
   h.addEventListener("click", () => {
     const type = h.dataset.type;
@@ -112,7 +100,6 @@ document.querySelectorAll(".notif-toggle").forEach(h => {
 });
 
 
-// Initial load
 loadNotifications();
 function toggleSidebar() {
   document.getElementById("sidebar").classList.toggle("open");

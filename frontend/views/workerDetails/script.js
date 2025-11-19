@@ -1,7 +1,6 @@
 const token = localStorage.getItem("token");
 const NOTIF_URL = "http://localhost:5000/api/notifications";
 let notifications = [];  
-// Login না থাকলে redirect
 if (!token) {
     window.location.href = "../login/login.html";
 }
@@ -9,22 +8,24 @@ if (!token) {
 const taskListContainer = document.querySelector(".task-list");
 const filterSelect = document.getElementById("status-filter");    
 
-// Backend → Worker-এর সব tasks আনবে
 async function getWorkerTasks(status = "") {
-    let url = "http://localhost:5000/api/requests";
+    const API_URL = "http://localhost:5000/api/requests";
+    const userId = localStorage.getItem("selected_user_id");
+
+    let url = `${API_URL}?workerId=${userId}`;
 
     if (status && status !== "All") {
-        // Convert frontend status → backend status
         const map = {
-
             "In Progress": "in_progress",
             "Completed": "completed",
             "Rejected": "rejected",
             "Assigned": "assigned",
-
         };
-        url += `?status=${map[status]}`;
+
+        url += `&status=${map[status]}`;
     }
+
+    console.log("FINAL_URL:", url);
 
     const res = await fetch(url, {
         headers: { Authorization: `Bearer ${token}` },
@@ -32,6 +33,7 @@ async function getWorkerTasks(status = "") {
 
     return await res.json();
 }
+
 
 // Task render function
 function renderTasks(tasks) {
@@ -43,7 +45,6 @@ function renderTasks(tasks) {
     }
 
     tasks.forEach(task => {
-    // ১. Status class mapping
     const statusClass = {
         pending: "pending",
         assigned: "assigned",
@@ -52,41 +53,20 @@ function renderTasks(tasks) {
         rejected: "rejected"
     }[task.status];
 
-    // ২. Date format
     const formattedDate = new Date(task.created_at).toLocaleDateString();
 
-    // ৩. Type
     const typeText = task.request_type === "waste" ? "Waste Pickup" : "Recycling";
-
-    // ✅ ৪. IMAGE URL → এখানে add করতে হবে
-    // const imgSrc = task.waste_image 
-    //     ? `http://localhost:5000/uploads/${task.waste_image}` 
-    //     : "https://via.placeholder.com/150x150?text=No+Image";
-
-    // const imgSrc = task.waste_image 
-    // ? `http://localhost:5000/uploads/${encodeURIComponent(task.waste_image)}`
-    // : "https://via.placeholder.com/150x150?text=No+Image";
-    // ================== fix for filename ==================
 let filename = task.waste_image;
 
-// যদি filename থাকে
 if (filename) {
-    // 1. backslash "\" → slash "/"
-    // 2. leading "uploads/" remove
+
     filename = filename.replace(/\\/g, '/').replace(/^uploads\//, '');
 }
 
-// final img src
 const imgSrc = filename 
     ? `http://localhost:5000/uploads/${encodeURIComponent(filename)}`
     : "https://via.placeholder.com/150x150?text=No+Image";
 
-
-    //     // ✅ Debug console.log
-    // console.log("Task ID:", task.id);
-    // console.log("Waste Image:", task.waste_image);
-    // console.log("Image URL:", imgSrc);
-    // ৫. Card HTML
     const card = `
         <div class="task-card">
             <div class="task-details">
@@ -132,10 +112,8 @@ async function loadNotifications() {
 
   const result = await response.json();
 
-  // Store all notifications
   notifications = result.notifications || [];
 
-  // Unread counter object
   const unreadCounts = result.unreadCounts || {};
 
 

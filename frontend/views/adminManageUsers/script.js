@@ -68,13 +68,12 @@ async function loadNotifications() {
 
   const result = await response.json();
 
-  // Store all notifications
   notifications = result.notifications || [];
 
-  // Unread counter object
+
   const unreadCounts = result.unreadCounts || {};
 
-  // Total sidebar count
+
   const totalUnread =
     (unreadCounts.request || 0) +
     (unreadCounts.feedback || 0) +
