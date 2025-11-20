@@ -67,7 +67,7 @@ header h1 {
   flex-direction: column;
   gap: 20px;
 }
-.request-container {
+.log-container {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -130,4 +130,26 @@ header h1 {
   border-radius: 50%;
   font-size: 12px;
   margin-left: 6px;
+}
+.request-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+.request-card:hover {
+  transform: translateY(-3px);
+}
+.left-info p{
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+.left-info span i{
+    margin-left: 10px;
+    margin-right: 10px;
 }
