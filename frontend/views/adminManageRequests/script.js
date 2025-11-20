@@ -77,7 +77,7 @@ function renderRequests(requests) {
             <option value="pending">pending</option>
             <option value="assigned">assigned</option>
             <option value="in_progress">In Progress</option>
-            <option value="completed">Completed</option>
+           <option value="completed">Completed</option>
             <option value="rejected">Rejected</option>
           </select>
 
