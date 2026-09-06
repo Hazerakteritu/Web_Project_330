@@ -26,19 +26,19 @@ The system enables citizens to submit waste collection and recycling requests, a
 * Accept assigned tasks
 * Update task/request status
 * Mark completed tasks
-* Receive ratings and feedback ⭐
+* Receive ratings and feedback
 * Worker leaderboard based on performance
-* Receive task-related notifications 🔔
+* Receive task-related notifications
 
 ### Administrator
 
 * Monitor waste collection and recycling requests
 * Manage users and workers
 * Assign and manage worker tasks
-* Track request statuses 🔎 
-* Monitor feedback and ratings ⭐
+* Track request statuses 
+* Monitor feedback and ratings 
 * Monitor worker performance and leaderboard
-* Manage role-based system notifications 🔔
+* Manage role-based system notifications 
 * Manage overall system operations
 
 ---
@@ -180,7 +180,7 @@ smart-waste-management/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 Follow the steps below to run the project locally.
 
