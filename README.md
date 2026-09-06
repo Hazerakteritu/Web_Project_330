@@ -1,4 +1,4 @@
-# ♻️ Smart Waste Management System
+# Smart Waste Management System
 
 A full-stack **Smart Waste Management System** designed to make waste collection and recycling operations more efficient, organized, and transparent by connecting **citizens, waste workers, and administrators** on a single platform.
 
@@ -6,44 +6,44 @@ The system enables citizens to submit waste collection and recycling requests, a
 
 ---
 
-## ✨ Features
+## Features
 
-### 👤 Citizen
+### Citizen
 
-* 🔐 Secure user registration and login
-* ♻️ Submit waste collection and recycling requests
-* 📷 Upload images/files with waste requests
-* 📍 Provide relevant request information
-* 📊 Track request status
-* ⭐ Rate and provide feedback on completed services
-* 🎁 Earn reward points for responsible waste management
-* 🔔 Receive role-based notifications
+* Secure user registration and login
+* Submit waste collection and recycling requests
+* Upload images/files with waste requests
+* Provide relevant request information
+* Track request status
+* Rate and provide feedback on completed services
+* Earn reward points for responsible waste management
+* Receive role-based notifications
 
-### 👷 Worker
+### Worker
 
-* 🔐 Secure worker authentication
-* 📋 View available and assigned waste collection tasks
-* ✅ Accept assigned tasks
-* 🔄 Update task/request status
-* ✔️ Mark completed tasks
-* ⭐ Receive ratings and feedback
-* 🏆 Worker leaderboard based on performance
-* 🔔 Receive task-related notifications
+* Secure worker authentication
+* View available and assigned waste collection tasks
+* Accept assigned tasks
+* Update task/request status
+* Mark completed tasks
+* Receive ratings and feedback ⭐
+* Worker leaderboard based on performance
+* Receive task-related notifications 🔔
 
-### 🛡️ Administrator
+### Administrator
 
-* 📊 Monitor waste collection and recycling requests
-* 👥 Manage users and workers
-* 📋 Assign and manage worker tasks
-* 🔎 Track request statuses
-* ⭐ Monitor feedback and ratings
-* 🏆 Monitor worker performance and leaderboard
-* 🔔 Manage role-based system notifications
-* ⚙️ Manage overall system operations
+* Monitor waste collection and recycling requests
+* Manage users and workers
+* Assign and manage worker tasks
+* Track request statuses 🔎 
+* Monitor feedback and ratings ⭐
+* Monitor worker performance and leaderboard
+* Manage role-based system notifications 🔔
+* Manage overall system operations
 
 ---
 
-## 🔑 Core Functionalities
+## Core Functionalities
 
 * **JWT-Based Authentication** — Secure authentication using JSON Web Tokens
 * **Role-Based Access Control** — Different permissions for Citizens, Workers, and Admins
@@ -59,7 +59,7 @@ The system enables citizens to submit waste collection and recycling requests, a
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
 ```text
                     ┌─────────────────────┐
@@ -109,7 +109,7 @@ The system enables citizens to submit waste collection and recycling requests, a
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
 
@@ -144,7 +144,7 @@ The system enables citizens to submit waste collection and recycling requests, a
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 smart-waste-management/
@@ -211,7 +211,7 @@ npm install
 
 ---
 
-## 🗄️ Database Setup
+## Database Setup
 
 Make sure **MySQL** is installed and running on your system.
 
@@ -231,7 +231,7 @@ Or import `schema.sql` using **MySQL Workbench**.
 
 ---
 
-## 🔐 Environment Variables
+## Environment Variables
 
 Create a `.env` file inside the backend directory and configure the required environment variables.
 
@@ -255,7 +255,7 @@ EMAIL_PASSWORD=your_email_password
 
 ---
 
-## ▶️ Run the Application
+## Run the Application
 
 Start the backend server:
 
@@ -279,7 +279,7 @@ Open the frontend in your browser or serve it through your preferred development
 
 ---
 
-## 🔒 Authentication & Authorization
+## Authentication & Authorization
 
 The system uses **JWT (JSON Web Token)** for authentication.
 
@@ -312,7 +312,7 @@ Role-based middleware ensures that users can only access the resources and opera
 
 ---
 
-## 🔄 Request Workflow
+## Request Workflow
 
 ```text
 Citizen
@@ -344,7 +344,7 @@ Reward Points / Worker Performance
 
 ---
 
-## 🏆 Reward & Leaderboard System
+## Reward & Leaderboard System
 
 The system includes a reward mechanism to encourage users and workers to actively participate in waste management.
 
@@ -365,7 +365,7 @@ This encourages healthy competition and improves service quality.
 
 ---
 
-## 📧 Email & OTP Verification
+## Email & OTP Verification
 
 The application uses **Nodemailer** to provide email-based services such as:
 
@@ -376,7 +376,7 @@ The application uses **Nodemailer** to provide email-based services such as:
 
 ---
 
-## 📁 File Upload
+## File Upload
 
 Using **Multer**, citizens can attach images or files when submitting waste-related requests.
 
@@ -389,7 +389,7 @@ Example use cases:
 
 ---
 
-## 🛡️ Security
+## Security
 
 The system implements several security practices:
 
